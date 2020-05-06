@@ -4,10 +4,6 @@ pipeline {
     stage('Build') {
       steps {
         sh 'echo "Hello World"'
-        sh '''
-                  echo "Multiline shell steps works too"
-                  ls -lah
-               '''
       }
     }
 
@@ -23,18 +19,6 @@ pipeline {
           s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file: 'index.html', bucket: 'ahmedmater')
         }
 
-      }
-    }
-
-    stage('input') {
-      steps {
-        input ' Finished using the web site? (Click "Proceed" to continue) '
-      }
-    }
-
-    stage('message') {
-      steps {
-        echo 'done'
       }
     }
 
