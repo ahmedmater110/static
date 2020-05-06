@@ -32,5 +32,11 @@ pipeline {
       }
     }
 
+    stage('message') {
+      steps {
+        echo 'done'
+      }
+    }
+
   }
 }
