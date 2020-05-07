@@ -14,6 +14,12 @@ pipeline {
       }
     }
 
+    stage('Docker') {
+      steps {
+        sh 'docker build --tag=ahmed110/udacity .'
+      }
+    }
+   
     stage('Upload to AWS') {
       steps {
         withAWS(region: 'us-east-1', credentials: 'aws-static') {
