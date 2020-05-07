@@ -16,10 +16,18 @@ pipeline {
 
     stage('Docker') {
       steps {
-        sh 'docker build --tag=ahmed110/udacity .'
+        sh 'docker build --tag=ahmed110/udacity:v2 .'
+        sh 'docker run -p 80:80 ahmed110/udacity:v2'
       }
     }
    
+    stage('Dockerhub') {
+      steps {
+        withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+          sh 'docker push ahmed110/udacity:v2'
+        }
+      }
+    }
     stage('Upload to AWS') {
       steps {
         withAWS(region: 'us-east-1', credentials: 'aws-static') {
