@@ -48,6 +48,16 @@ pipeline {
         }
       }
     }
+    
+    stage('Deployment'){
+      steps {
+        sh 'kubectl get nodes'
+        sh 'kubectl apply -f nginx-deployment.yaml'
+        sh 'kubectl apply -f load-balancer.yaml'
+        sh 'kubectl get pods'
+        sh 'kubectl get svc'
+      }
+    }
 
   }
 }
