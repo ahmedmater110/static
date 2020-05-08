@@ -17,7 +17,6 @@ pipeline {
     stage('Docker') {
       steps {
         sh 'docker build --tag=ahmed110/udacity:v2 .'
-        sh 'docker run -d -p 80:80 ahmed110/udacity:v2'
       }
     }
    
