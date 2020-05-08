@@ -44,8 +44,7 @@ pipeline {
                 --nodes-min 1 \
                 --nodes-max 3 \
                 --max-pods-per-node 5 \
-                --ssh-access \
-                --ssh-public-key my-public-key.pub 
+                --ssh-access
           '''
         }
       }
