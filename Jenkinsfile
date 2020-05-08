@@ -34,7 +34,7 @@ pipeline {
         withAWS(region: 'us-east-1', credentials: 'aws-static') {
           sh '''
                 eksctl create cluster \
-                --name production \
+                --name prod \
                 --region us-east-1 \
                 --zones us-east-1a \
                 --zones us-east-1b \
