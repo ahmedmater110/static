@@ -39,7 +39,8 @@ pipeline {
     
     stage('Deployment'){
       steps {
-        withAWS(region: 'us-east-1', credentials: 'aws-static') {
+        withKubeConfig([credentialsId: 'kubernetes', serverUrl: 'https://68A9AEA1B3128E2C8A6FA521EAFC2F4B.yl4.us-east-1.eks.amazonaws.com']) {
+          sh 'kubectl get nodes'
           sh 'kubectl apply -f nginx-deployment.yaml'
           sh 'kubectl apply -f load-balancer.yaml'
           sh 'kubectl get pods'
