@@ -32,7 +32,9 @@ pipeline {
     stage('Amazon EKS') {
       steps {
         withAWS(region: 'us-east-1', credentials: 'aws-static') {
-          sh 'aws eks --region us-east-1 update-kubeconfig --name prod'
+          sh '''
+                aws eks --region us-east-1 update-kubeconfig --name prod
+          '''
         }
       }
     }
