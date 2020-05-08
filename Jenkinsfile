@@ -32,9 +32,7 @@ pipeline {
     stage('Amazon EKS') {
       steps {
         withAWS(region: 'us-east-1', credentials: 'aws-static') {
-          sh '''
-                aws eks --region us-east-1 update-kubeconfig --name prod
-          '''
+          sh 'aws eks --region us-east-1 update-kubeconfig --name prod'
         }
       }
     }
@@ -42,7 +40,6 @@ pipeline {
     stage('Deployment'){
       steps {
         withAWS(region: 'us-east-1', credentials: 'aws-static') {
-          sh 'kubectl get nodes'
           sh 'kubectl apply -f nginx-deployment.yaml'
           sh 'kubectl apply -f load-balancer.yaml'
           sh 'kubectl get pods'
