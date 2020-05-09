@@ -28,7 +28,7 @@ pipeline {
         withAWS(region: 'us-east-1', credentials: 'aws-static') {
           sh '''
                 eksctl create cluster \
-                --name prod \
+                --name test \
                 --region us-east-1 \
                 --zones us-east-1a \
                 --zones us-east-1b \
@@ -39,7 +39,7 @@ pipeline {
                 --nodes-max 3 \
                 --managed
           '''
-          sh 'aws eks --region us-east-1 update-kubeconfig --name prod'
+          sh 'aws eks --region us-east-1 update-kubeconfig --name test'
         }
       }
     }
