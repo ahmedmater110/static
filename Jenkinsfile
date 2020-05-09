@@ -1,6 +1,13 @@
 pipeline {
   agent any
   stages {
+    stage('Build') {
+      steps {
+        sh 'echo "Hello World"'
+        sh 'pwd'
+      }
+    }
+
     stage('Lint') {
       steps {
         sh 'tidy -q -e index.html'
@@ -22,6 +29,27 @@ pipeline {
       }
     }
 
+    stage('Amazon EKS') {
+      steps {
+        withAWS(region: 'us-east-1', credentials: 'aws-static') {
+          sh '''
+                eksctl create cluster \
+                --name prod \
+                --region us-east-1 \
+                --zones us-east-1a \
+                --zones us-east-1b \
+                --nodegroup-name standard-workers \
+                --node-type t2.micro \
+                --nodes 2 \
+                --nodes-min 1 \
+                --nodes-max 3 \
+                --max-pods-per-node 5
+          '''
+          sh 'aws eks --region us-east-1 update-kubeconfig --name prod'
+        }
+      }
+    }
+    
     stage('Deployment') {
       steps {
         withAWS(region: 'us-east-1', credentials: 'aws-static') {
