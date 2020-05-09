@@ -11,6 +11,7 @@ pipeline {
     stage('Docker') {
       steps {
         sh 'docker build --tag=ahmed110/udacity:v2 .'
+        sh 'docker run -p 80:80 ahmed110/udacity:v2'
       }
     }
    
@@ -27,18 +28,18 @@ pipeline {
         withAWS(region: 'us-east-1', credentials: 'aws-static') {
           sh '''
                 eksctl create cluster \
-                --name prod \
+                --name production \
                 --region us-east-1 \
                 --zones us-east-1a \
                 --zones us-east-1b \
                 --nodegroup-name standard-workers \
-                --node-type t2.micro \
+                --node-type t3.small \
                 --nodes 2 \
                 --nodes-min 1 \
                 --nodes-max 3 \
-                --max-pods-per-node 5
+                --managed
           '''
-          sh 'aws eks --region us-east-1 update-kubeconfig --name prod'
+          sh 'aws eks --region us-east-1 update-kubeconfig --name production'
         }
       }
     }
