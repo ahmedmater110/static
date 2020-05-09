@@ -1,12 +1,6 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
-      steps {
-        sh 'echo "Let's start"'
-      }
-    }
-
     stage('Lint') {
       steps {
         sh 'tidy -q -e index.html'
