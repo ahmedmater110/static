@@ -41,7 +41,7 @@ pipeline {
       }
     }
 
-    stage('Wait user approve') {
+    stage('Wait user approval') {
       steps {
              input "Ready to start RollingUpdate ?"
       }
@@ -50,7 +50,7 @@ pipeline {
     stage('RollingUpdate') {
       steps {
         withAWS(region: 'us-east-1', credentials: 'aws-static') {
-          sh 'kubectl set image deployment/nginx-deployment nginx-deployment=ahmed110/udacity:v3'
+          sh 'kubectl set image deployment/nginx-deployment nginx=ahmed110/udacity:v3'
           sh 'kubectl describe deployments'
         }
       }
